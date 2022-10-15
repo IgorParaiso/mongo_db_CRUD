@@ -1,6 +1,8 @@
 from utils import config
 from controller.controller_cliente import Controller_Cliente
+from reports.relatorios import Relatorio
 
+relatorio = Relatorio()
 ctrl_Cliente = Controller_Cliente()
 
 def menu_relatorio():
@@ -9,7 +11,7 @@ def menu_relatorio():
     config.clear_console(1)
 
     if choice == 1:
-        print("relatório 1")
+        relatorio.get_relatorio_clientes()
     elif choice == 2:
         print("relatório 2")
     elif choice == 0:
