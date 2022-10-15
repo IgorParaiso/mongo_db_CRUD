@@ -1,9 +1,12 @@
 from utils import config
 from controller.controller_cliente import Controller_Cliente
+from controller.controller_laboratorio import Controller_Laboratorio
 from reports.relatorios import Relatorio
+
 
 relatorio = Relatorio()
 ctrl_Cliente = Controller_Cliente()
+ctrl_lab = Controller_Laboratorio()
 
 def menu_relatorio():
     print(config.MENU_RELATORIOS)
@@ -14,6 +17,8 @@ def menu_relatorio():
         relatorio.get_relatorio_clientes()
     elif choice == 2:
         print("relatório 2")
+    elif choice == 3:
+        relatorio.get_relatorio_laboratorios()
     elif choice == 0:
         print("")
     else:
@@ -32,6 +37,7 @@ def menu_inserir():
         print(config.MENU_ATRIBUTOS_AGENDA)
     elif choice == 3:
         print(config.MENU_ATRIBUTOS_LABORATORIOS)
+        novo_lab = ctrl_lab.inserir_laboratorio()
     elif choice == 4:
         print("")
     else:
@@ -48,7 +54,7 @@ def menu_remover():
     elif choice == 2:
         print(config.MENU_ATRIBUTOS_AGENDA)
     elif choice == 3:
-        print(config.MENU_ATRIBUTOS_LABORATORIOS)
+        ctrl_lab.excluir_laboratorio()
     elif choice == 4:
         print("")
     else:
@@ -67,6 +73,7 @@ def menu_atualizar():
         print(config.MENU_ATRIBUTOS_AGENDA)
     elif choice == 3:
         print(config.MENU_ATRIBUTOS_LABORATORIOS)
+        laboratorio_atualizado = ctrl_lab.atualizar_laboratorio()
     elif choice == 4:
         print("")
     else:
