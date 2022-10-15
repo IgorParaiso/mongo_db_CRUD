@@ -1,0 +1,1 @@
+SELECT c.nome, c.telefone FROM clientes c order by c.nome
