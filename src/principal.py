@@ -1,4 +1,7 @@
 from utils import config
+from controller.controller_cliente import Controller_Cliente
+
+ctrl_Cliente = Controller_Cliente()
 
 def menu_relatorio():
     print(config.MENU_RELATORIOS)
@@ -22,6 +25,7 @@ def menu_inserir():
 
     if choice == 1:
         print(config.MENU_ATRIBUTOS_CLIENTES)
+        novo_cliente = ctrl_Cliente.inserir_cliente()
     elif choice == 2:
         print(config.MENU_ATRIBUTOS_AGENDA)
     elif choice == 3:
@@ -38,7 +42,7 @@ def menu_remover():
     config.clear_console(1)
 
     if choice == 1:
-        print(config.MENU_ATRIBUTOS_CLIENTES)
+        ctrl_Cliente.excluir_cliente()
     elif choice == 2:
         print(config.MENU_ATRIBUTOS_AGENDA)
     elif choice == 3:
@@ -56,6 +60,7 @@ def menu_atualizar():
 
     if choice == 1:
         print(config.MENU_ATRIBUTOS_CLIENTES)
+        cliente_atualizado = ctrl_Cliente.atualizar_cliente()
     elif choice == 2:
         print(config.MENU_ATRIBUTOS_AGENDA)
     elif choice == 3:

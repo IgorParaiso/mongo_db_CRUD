@@ -5,7 +5,7 @@ class Controller_Cliente:
     def __init__(self):
         pass
 
-    def inserrir_cliente(self) -> Cliente:
+    def inserir_cliente(self) -> Cliente:
         
         # Faz a conexão com o banco de dados
         oracle = OracleQueries(can_write=True)

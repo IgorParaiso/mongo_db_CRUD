@@ -1,3 +1,14 @@
+###########################################################################
+# Author: Howard Roatti
+# Created: 02/09/2022
+# Last Update: 03/09/2022
+#
+# Essa classe auxilia na conexão com o Banco de Dados Oracle
+# Documentação base: 
+#                  (1) https://cx-oracle.readthedocs.io/en/latest/user_guide/sql_execution.html
+#                  (2) https://cx-oracle.readthedocs.io/en/latest/user_guide/plsql_execution.html
+#                  (3) https://cx-oracle.readthedocs.io/en/latest/index.html
+###########################################################################
 import json
 import cx_Oracle
 from pandas import DataFrame
@@ -11,7 +22,7 @@ class OracleQueries:
         self.service_name = 'XEPDB1'
         self.sid = 'XE'
 
-        with open("conexion/passphrase/authentication.oracle", "r") as f:
+        with open("/home/labdatabase/Documents/Projeto_Banco_de_dados/CRUDatabase/src/conexion/passphrase/authentication.oracle", "r") as f:
             self.user, self.passwd = f.read().split(',')            
 
     def __del__(self):
