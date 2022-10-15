@@ -1,8 +1,8 @@
 MENU_PRINCIPAL = """Menu Principal
 1 - Relatórios
 2 - Inserir Registros
-3 - Atualizar Registros
-4 - Remover Registros
+3 - Remover Registros
+4 - Atualizar Registros
 5 - Sair
 """
 
