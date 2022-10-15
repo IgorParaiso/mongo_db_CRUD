@@ -10,44 +10,49 @@ class Controller_Cliente:
         # Faz a conexão com o banco de dados
         oracle = OracleQueries(can_write=True)
         oracle.connect()
+        
+        cpf = int(input('Insira o cpf do cliente: '))
+        if self.verifica_se_existe(oracle, cpf):
+            nome = input('Insira o nome do cliente: ')
+            telefone = input('Insira o telefone do cliente: ')
 
-        nome = input('Insira o nome do cliente: ')
-        telefone = input('Insira o telefone do cliente')
+            oracle.write(f"insert into clientes values ({cpf},'{nome}', '{telefone}')")
 
-        oracle.write(f"insert into clientes values ('{nome}', '{telefone}')")
+            df_cliente = oracle.sqlToDataFrame(f"select id_cliente, nome_cliente, telefone from clientes where id_cliente = {cpf}")
 
-        df_cliente = oracle.sqlToDataFrame(f"select nome, telefone from clientes where nome = '{nome}' and telefone = '{telefone}'")
+            novo_cliente = Cliente(df_cliente.id_cliente.values[0], df_cliente.nome_cliente.values[0], df_cliente.telefone.values[0])
 
-        novo_cliente = Cliente(df_cliente.nome.values[0], df_cliente.telefone.values[0])
+            print(novo_cliente.to_string())
 
-        print(novo_cliente.to_string())
-
-        return novo_cliente
+            return novo_cliente
+        else:
+            print(f'O CPF {cpf} já está cadastrado')
+            return None
 
     def atualizar_cliente(self) -> Cliente:
         # Faz a conexão com o banco de dados
         oracle = OracleQueries(can_write=True)
         oracle.connect()
 
-        nome = input("Insira o nome do cliente a ser alterado: ")
+        cpf = int(input("Insira o CPF do cliente a ser alterado: "))
 
-        if not self.verifica_se_existe(oracle, nome):
-            choice = input("Escolha uma opção\n1 - Alterar nome\n2 - Alterar telefone")
+        if not self.verifica_se_existe(oracle, cpf):
+            choice = int(input("Escolha uma opção\n1 - Alterar nome\n2 - Alterar telefone\n"))
             
             if choice == 1:
                 novo_nome = input("Digite o novo nome: ")
-                oracle.write(f"update clientes set nome = '{novo_nome}' where nome = '{nome}")
+                oracle.write(f"update clientes set nome_cliente = '{novo_nome}' where id_cliente = '{cpf}'")
 
-                df_cliente = oracle.sqlToDataFrame(f"select nome, telefone from clientes where nome = '{nome}'")
-                cliente_atualizado = Cliente(df_cliente.nome.values[0], df_cliente.telefone.values[0])
+                df_cliente = oracle.sqlToDataFrame(f"select id_cliente, nome_cliente, telefone from clientes where id_cliente = '{cpf}'")
+                cliente_atualizado = Cliente(df_cliente.id_cliente.values[0], df_cliente.nome_cliente.values[0], df_cliente.telefone.values[0])
                 print(cliente_atualizado.to_string())
                 return cliente_atualizado
             
             elif choice == 2:
                 novo_telefone = input("Digite o novo telefone: ")
-                oracle.write(f"update clientes set telefone = '{novo_telefone}' where nome = '{nome}")
-                df_cliente = oracle.sqlToDataFrame(f"select nome, telefone from clientes where nome = '{nome}'")
-                cliente_atualizado = Cliente(df_cliente.nome.values[0], df_cliente.telefone.values[0])
+                oracle.write(f"update clientes set telefone = '{novo_telefone}' where id_cliente = '{cpf}'")
+                df_cliente = oracle.sqlToDataFrame(f"select id_cliente, nome_cliente, telefone from clientes where id_cliente = '{cpf}'")
+                cliente_atualizado = Cliente(df_cliente.id_cliente.values[0], df_cliente.nome_cliente.values[0], df_cliente.telefone.values[0])
                 print(cliente_atualizado.to_string())
                 return cliente_atualizado
             
@@ -55,7 +60,7 @@ class Controller_Cliente:
                 print('opção inválida')
                 return None
         else:
-            print(f"O cliente {nome} não existe.")
+            print(f"O cliente {cpf} não existe.")
             return None
     
     def excluir_cliente(self):
@@ -63,22 +68,22 @@ class Controller_Cliente:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
 
-        nome = input("Insira o nome do cliente a ser excluído: ")
+        cpf = int(input("Insira o CPF do cliente a ser excluído: "))
 
-        if self.verifica_se_existe(oracle, nome):
-            df_cliente = oracle.sqlToDataFrame(f"select nome, telefone from clientes where nome = '{nome}'")
-            oracle.write(f"delete from clientes where nome = '{nome}'")
+        if not self.verifica_se_existe(oracle, cpf):
+            df_cliente = oracle.sqlToDataFrame(f"select id_cliente, nome_cliente, telefone from clientes where id_cliente = '{cpf}'")
+            oracle.write(f"delete from clientes where id_cliente = '{cpf}'")
 
-            cliente_excluido = Cliente(df_cliente.nome.values[0], df_cliente.telefone.values[0])
+            cliente_excluido = Cliente(df_cliente.id_cliente.values[0], df_cliente.nome_cliente.values[0], df_cliente.telefone.values[0])
 
             print("Cliente Removido com sucesso")
             print(cliente_excluido.to_string())
         
         else:
-            print("cliente {nome} não existe")
+            print(f"cliente {cpf} não existe")
             return None
 
-    def verifica_se_existe(self, oracle:OracleQueries, nome:str=None) -> bool:
+    def verifica_se_existe(self, oracle:OracleQueries, cpf:int=None) -> bool:
 
-        df_cliente = oracle.sqlToDataFrame(f"select nome, telefone from clientes where nome = '{nome}'")
+        df_cliente = oracle.sqlToDataFrame(f"select id_cliente, nome_cliente from clientes where id_cliente = '{cpf}'")
         return df_cliente.empty
