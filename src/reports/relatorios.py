@@ -15,7 +15,7 @@ class Relatorio:
         oracle.connect()
 
         print(oracle.sqlToDataFrame(self.query_relatorio_clientes))
-        input("Pressione Enter para sair do relatório")
+        
 
     def get_relatorio_laboratorios(self):
 
@@ -23,4 +23,4 @@ class Relatorio:
         oracle.connect()
 
         print(oracle.sqlToDataFrame(self.query_relatorio_laboratorios))
-        input("Pressione Enter para sair do relatório")
+        

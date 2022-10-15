@@ -50,10 +50,12 @@ def menu_remover():
     config.clear_console(1)
 
     if choice == 1:
+        relatorio.get_relatorio_clientes()
         ctrl_Cliente.excluir_cliente()
     elif choice == 2:
         print(config.MENU_ATRIBUTOS_AGENDA)
     elif choice == 3:
+        relatorio.get_relatorio_laboratorios()
         ctrl_lab.excluir_laboratorio()
     elif choice == 4:
         print("")
@@ -98,7 +100,7 @@ def run():
             menu_atualizar()
         
         elif choice == 5: #Sair
-            print("#############Tchau#############")
+            print("Muito obrigado por usar o sistema")
             exit(0)
         else:
             print("#############opção inválida#############")
