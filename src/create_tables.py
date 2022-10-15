@@ -16,7 +16,7 @@ def create_tables(query:str):
                 print(e)
 
 def run():
-    with open("/home/labdatabase/Documents/Projeto_Banco_de_dados/CRUDatabase/sql/create_tables.sql") as f:
+    with open("sql/create_tables.sql") as f:
         query_create = f.read()
     print("Criando tabelas...")
     create_tables(query=query_create)

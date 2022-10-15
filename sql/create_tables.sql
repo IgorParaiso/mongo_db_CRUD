@@ -6,27 +6,27 @@ DROP TABLE LABORATORIOS;
 DROP TABLE CLIENTES;
 
 CREATE TABLE CLIENTES (
-    id_cliente NUMBER NOT NULL,
+    id_cliente NUMERIC NOT NULL,
     nome_cliente VARCHAR2(50) NOT NULL,
     telefone VARCHAR(30) NOT NULL,
-    CONSTRAINT ID_CLIENTE_PK PRIMARY_KEY (id_cliente)
+    CONSTRAINT ID_CLIENTE_PK PRIMARY KEY (id_cliente)
 );
 
 CREATE TABLE LABORATORIOS (
-    id_lab NUMBER NOT NULL,
-    qtd_maquinas NUMBER NOT NULL,
+    id_lab NUMERIC NOT NULL,
+    qtd_maquinas NUMERIC NOT NULL,
     tipo_lab VARCHAR2(30) NOT NULL,
-    CONSTRAINT ID_LAB_PK PRIMARY_KEY (id_lab)
+    CONSTRAINT ID_LAB_PK PRIMARY KEY (id_lab)
 );
 
 CREATE TABLE AGENDA (
-    id_cliente NUMBER NOT NULL,
-    id_lab NUMBER NOT NULL,
-    id_agenda NUMBER NOT NULL,
+    id_cliente NUMERIC NOT NULL,
+    id_lab NUMERIC NOT NULL,
+    id_agenda NUMERIC NOT NULL,
     horaInicio TIMESTAMP NOT NULL,
     horaFim TIMESTAMP NOT NULL,
     data DATE NOT NULL,
-    CONSTRAINT ID_AGENDA_PK PRIMARY_KEY (id_cliente, id_lab, id_agenda)
+    CONSTRAINT ID_AGENDA_PK PRIMARY KEY (id_cliente, id_lab, id_agenda)
 );
 
 ALTER TABLE AGENDA 

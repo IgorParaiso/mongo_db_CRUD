@@ -20,35 +20,27 @@ class OracleQueries:
         self.host = "localhost"
         self.port = 1521
         self.service_name = 'XEPDB1'
-        self.sid = 'XE'
 
-        with open("/home/labdatabase/Documents/Projeto_Banco_de_dados/CRUDatabase/src/conexion/passphrase/authentication.oracle", "r") as f:
+        with open("src/conexion/passphrase/authentication.oracle", "r") as f:
             self.user, self.passwd = f.read().split(',')            
 
     def __del__(self):
         if self.cur:
             self.close()
 
-    def connectionString(self, in_container:bool=False):
+    def connectionString(self):
         '''
         Esse método cria uma string de conexão utilizando os parâmetros necessários
         Parameters:
         - host: endereço da localização do servidor
         - port: porta a qual o Oracle está escutando
         - service_name: nome do serviço criado para o banco de dados Oracle
-        - sid: id do serviço
         return: string de conexão
         '''
-        if not in_container:
-            string_connection = cx_Oracle.makedsn(host=self.host,
-                                                port=self.port,
-                                                sid=self.sid
-                                                )
-        elif in_container:
-            string_connection = cx_Oracle.makedsn(host=self.host,
-                                                port=self.port,
-                                                service_name=self.service_name
-                                                )
+        string_connection = cx_Oracle.makedsn(host=self.host,
+                                              port=self.port,
+                                              service_name=self.service_name
+                                             )
         return string_connection
 
     def connect(self):
