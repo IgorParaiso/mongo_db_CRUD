@@ -45,3 +45,6 @@ class Agenda:
 
     def get_laboratorio(self) -> Laboratorio:
         return self.laboratorio
+
+    def to_string(self) -> str:
+        return f"Cliente: {self.get_cliente()} | Laboratório: {self.get_laboratorio}\nHorario: {self.get_data} - {self.get_horaInicio} "
