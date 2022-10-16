@@ -53,10 +53,10 @@ class Controller_Agenda:
         
         id_agenda = int(input('Insira o código de reserva do laboratório: '))
         if not self.verifica_se_existe_agenda(oracle, id_agenda):
-            choice = int(input("Escolha o atributo a ser  alterado\n1 - Cliente que fez a reserva\n2 - Laboratório que está reservado\n3 - Horário de início\n4 - Horário de Término\n5 - Dia da reserva\n0 - Sair"))
+            choice = int(input("Escolha o atributo a ser  alterado\n1 - Cliente que fez a reserva\n2 - Laboratório que está reservado\n3 - Horário de início\n4 - Horário de Término\n5 - Dia da reserva\n0 - Sair "))
 
             if choice == 1:
-                novo_cpf = int(input("Insira o CPF do novo cliente:"))
+                novo_cpf = int(input("Insira o CPF do novo cliente: "))
                 if self.verifica_se_existe_cliente(oracle, novo_cpf):
                    print(f'O novo cliente {novo_cpf} não exite') 
                    return None
@@ -71,7 +71,7 @@ class Controller_Agenda:
 
                 return novo_agenda
             elif choice == 2:
-                novo_lab = int(input("Insira o CPF do novo cliente:"))
+                novo_lab = int(input("Insira o CPF do novo cliente: "))
                 if self.verifica_se_existe_lab(oracle, novo_lab):
                    print(f'O novo laboratório {novo_lab} não exite') 
                    return None
@@ -130,19 +130,23 @@ class Controller_Agenda:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
 
-        id_agenda = int(input('Escolha a agenda a ser excluida'))
+        id_agenda = int(input('Escolha a agenda a ser excluida '))
 
         if self.verifica_se_existe_agenda(oracle, id_agenda):
             print(f'A agenda {id_agenda} não existe')
             return None
         
-        df_agenda = oracle.sqlToDataFrame(f"select id_cliente, id_lab, id_agenda, horaInicio, horaFim, data from agenda where id_agenda = {id_agenda}")
-        oracle.write(f"delete from agenda where id_agenda = {id_agenda}")
-        
-        agenda_excluida = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horainicio.values[0], df_agenda.horafim.values[0], df_agenda.data.values[0])
+        confirmation = str(input(f"Tem certeza que quer excluir a agenda {id_agenda}? (Digite S para sim e N para não) "))
+        if confirmation.upper() == "S":
+            df_agenda = oracle.sqlToDataFrame(f"select id_cliente, id_lab, id_agenda, horaInicio, horaFim, data from agenda where id_agenda = {id_agenda}")
+            oracle.write(f"delete from agenda where id_agenda = {id_agenda}")
+            
+            agenda_excluida = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horainicio.values[0], df_agenda.horafim.values[0], df_agenda.data.values[0])
 
-        print("Agenda excluida co msucesso")
-        print(agenda_excluida.to_string())
+            print("Agenda excluida com sucesso")
+            print(agenda_excluida.to_string())
+        
+        return None
 
 
     def verifica_se_existe_lab(self, oracle:OracleQueries, id_lab:int=None) -> bool:

@@ -71,13 +71,29 @@ class Controller_Laboratorio:
         id_lab = int(input("Insira o Código do laboratório a ser excluído: "))
 
         if not self.verifica_se_existe(oracle, id_lab):
-            df_cliente = oracle.sqlToDataFrame(f"select id_lab, qtd_maquinas, tipo_lab from laboratorios where id_lab = '{id_lab}'")
-            oracle.write(f"delete from laboratorios where id_lab = '{id_lab}'")
 
-            cliente_excluido = Laboratorio(df_cliente.id_lab.values[0], df_cliente.qtd_maquinas.values[0], df_cliente.tipo_lab.values[0])
+            if self.verifica_se_existe_agenda(oracle, id_lab):
+                
+                confirmation = str(input("Tem certeza que quer excluir esse cleinte? (Digite S para sim e N para não) "))
+                if confirmation.upper() == "S":
+                    df_cliente = oracle.sqlToDataFrame(f"select id_lab, qtd_maquinas, tipo_lab from laboratorios where id_lab = '{id_lab}'")
+                    oracle.write(f"delete from laboratorios where id_lab = '{id_lab}'")
 
-            print("Cliente Removido com sucesso")
-            print(cliente_excluido.to_string())
+                    cliente_excluido = Laboratorio(df_cliente.id_lab.values[0], df_cliente.qtd_maquinas.values[0], df_cliente.tipo_lab.values[0])
+
+                    print("Cliente Removido com sucesso")
+                    print(cliente_excluido.to_string())
+            
+            confirmation = str(input("O usuário tem registro na tabela agenda, digite S para excluir os registros da tabela agenda e N para voltar ao menu principal: "))
+            if confirmation.upper() == "S":
+                df_cliente = oracle.sqlToDataFrame(f"select id_lab, qtd_maquinas, tipo_lab from laboratorios where id_lab = '{id_lab}'")
+                oracle.write(f"delete from agenda where id_lab = '{id_lab}'")
+                oracle.write(f"delete from laboratorios where id_lab = '{id_lab}'")
+
+                cliente_excluido = Laboratorio(df_cliente.id_lab.values[0], df_cliente.qtd_maquinas.values[0], df_cliente.tipo_lab.values[0])
+
+                print("Cliente Removido com sucesso")
+                print(cliente_excluido.to_string())
         
         else:
             print(f"cliente {id_lab} não existe")
@@ -88,3 +104,7 @@ class Controller_Laboratorio:
         df_cliente = oracle.sqlToDataFrame(f"select id_lab, qtd_maquinas from laboratorios where id_lab = '{cpf}'")
         return df_cliente.empty
 
+    def verifica_se_existe_agenda(self, oracle:OracleQueries, id_agenda:int=None) -> bool:
+
+        df_agenda = oracle.sqlToDataFrame(f"select id_agenda, id_cliente, id_lab from agenda where id_lab = '{id_agenda}'")
+        return df_agenda.empty
