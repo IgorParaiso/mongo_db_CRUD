@@ -12,7 +12,7 @@ class Controller_Laboratorio:
         oracle.connect()
         
         id_lab = int(input('Insira o código do laboratório: '))
-        if self.verifica_se_existe(oracle, id_lab):
+        if not self.verifica_se_existe(oracle, id_lab):
             qtd_maquinas = input('Insira a quantidade de máquinas do laboratório: ')
             lab_tipo = input('Insira o tipo de laboratório: ')
 
