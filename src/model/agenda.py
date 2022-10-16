@@ -1,6 +1,4 @@
 from datetime import date, datetime, time
-from model.clientes import Cliente
-from model.laboratorios import Laboratorio
 
 class Agenda:
     def __init__(self, 
@@ -55,4 +53,4 @@ class Agenda:
         return self.id_agenda
 
     def to_string(self) -> str:
-        return f"Cliente: {self.get_cliente()} | Laboratório: {self.get_laboratorio}\nHorario: {self.get_data} - {self.get_horaInicio}"
+        return f"Cliente: {self.get_cliente()} | Laboratório: {self.get_laboratorio()}\nHorario: {self.get_data()} - {self.get_horaInicio()}"
