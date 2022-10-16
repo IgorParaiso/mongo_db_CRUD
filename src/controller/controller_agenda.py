@@ -12,10 +12,10 @@ class Controller_Agenda:
         oracle.connect()
         
         id_lab = int(input('Insira o código do laboratório a ser reservado: '))
-        if self.verifica_se_existe_lab(oracle, id_lab):
+        if not self.verifica_se_existe_lab(oracle, id_lab):
             
-            cpf = input('Insira o CPF de quem irá reservar o laboratório: ')
-            if self.verifica_se_existe_cliente(oracle, cpf):
+            cpf = int(input('Insira o CPF de quem irá reservar o laboratório: '))
+            if not self.verifica_se_existe_cliente(oracle, cpf):
                 
                 id_agenda = int(input("Insira o número da reserva: "))
                 if not self.verifica_se_existe_agenda(oracle, id_agenda):
