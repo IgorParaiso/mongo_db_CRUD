@@ -1,12 +1,14 @@
 from utils import config
 from controller.controller_cliente import Controller_Cliente
 from controller.controller_laboratorio import Controller_Laboratorio
+from controller.controller_agenda import Controller_Agenda
 from reports.relatorios import Relatorio
 
 
 relatorio = Relatorio()
 ctrl_Cliente = Controller_Cliente()
 ctrl_lab = Controller_Laboratorio()
+ctrl_agenda = Controller_Agenda()
 
 def menu_relatorio():
     print(config.MENU_RELATORIOS)
@@ -16,7 +18,7 @@ def menu_relatorio():
     if choice == 1:
         relatorio.get_relatorio_clientes()
     elif choice == 2:
-        print("relatório 2")
+        relatorio.get_relatorio_agenda()
     elif choice == 3:
         relatorio.get_relatorio_laboratorios()
     elif choice == 0:
@@ -35,6 +37,7 @@ def menu_inserir():
         novo_cliente = ctrl_Cliente.inserir_cliente()
     elif choice == 2:
         print(config.MENU_ATRIBUTOS_AGENDA)
+        nova_agenda = ctrl_agenda.inserir_agenda()
     elif choice == 3:
         print(config.MENU_ATRIBUTOS_LABORATORIOS)
         novo_lab = ctrl_lab.inserir_laboratorio()
@@ -53,7 +56,8 @@ def menu_remover():
         relatorio.get_relatorio_clientes()
         ctrl_Cliente.excluir_cliente()
     elif choice == 2:
-        print(config.MENU_ATRIBUTOS_AGENDA)
+        relatorio.get_relatorio_agenda()
+        ctrl_agenda.exclui_agenda()
     elif choice == 3:
         relatorio.get_relatorio_laboratorios()
         ctrl_lab.excluir_laboratorio()
@@ -73,6 +77,7 @@ def menu_atualizar():
         cliente_atualizado = ctrl_Cliente.atualizar_cliente()
     elif choice == 2:
         print(config.MENU_ATRIBUTOS_AGENDA)
+        agenda_atualizada = ctrl_agenda.atualizar_agenda()
     elif choice == 3:
         print(config.MENU_ATRIBUTOS_LABORATORIOS)
         laboratorio_atualizado = ctrl_lab.atualizar_laboratorio()
