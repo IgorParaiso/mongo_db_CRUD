@@ -22,6 +22,10 @@ def menu_relatorio():
         relatorio.get_relatorio_agenda()
     elif choice == 3:
         relatorio.get_relatorio_laboratorios()
+    elif choice == 4:
+        relatorio.get_relatorio_clientes_lab()
+    elif choice == 5:
+        relatorio.get_relatorio_total_clientes()
     elif choice == 0:
         print("")
     else:
@@ -111,7 +115,7 @@ def run():
             print("Muito obrigado por usar o sistema")
             exit(0)
         else:
-            print("#############opção inválida#############")
+            print("opção inválida")
             exit(1)
 
 

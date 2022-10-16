@@ -46,6 +46,7 @@ class Relatorio:
         oracle.connect()
 
         print(oracle.sqlToDataFrame(self.query_relatorio_clientes_lab))
+        input("Pressione Enter para sair do relatório")
 
     def get_relatorio_total_clientes(self):
 
@@ -53,3 +54,4 @@ class Relatorio:
         oracle.connect()
 
         print(oracle.sqlToDataFrame(self.query_relatorio_total_clientes))
+        input("Pressione Enter para sair do relatório")

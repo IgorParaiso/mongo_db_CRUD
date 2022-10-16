@@ -9,6 +9,8 @@ MENU_RELATORIOS = """\tRelatórios
 \t1 - Relatório de Clientes
 \t2 - Relatório de Agenda
 \t3 - Relatório de Laboratórios
+\t4 - Relatório de laboratórios reservado por um cliente
+\t5 - Total de reservas feitas por um clientes
 \t0 - Sair"""
 
 MENU_ENTIDADES = """\tEntidades

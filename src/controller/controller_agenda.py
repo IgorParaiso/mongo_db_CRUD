@@ -1,6 +1,8 @@
 from model.agenda import Agenda
 from conexion.oracle_queries import OracleQueries
+from reports.relatorios import Relatorio
 
+relatorios = Relatorio()
 class Controller_Agenda:
     def __init__(self):
         pass
@@ -11,9 +13,10 @@ class Controller_Agenda:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
         
+        relatorios.get_relatorio_laboratorios()
         id_lab = int(input('Insira o código do laboratório a ser reservado: '))
         if not self.verifica_se_existe_lab(oracle, id_lab):
-            
+            relatorios.get_relatorio_clientes()
             cpf = input('Insira o CPF de quem irá reservar o laboratório: ')
             if not self.verifica_se_existe_cliente(oracle, cpf):
                 
