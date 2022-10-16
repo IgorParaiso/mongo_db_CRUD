@@ -14,7 +14,7 @@ class Controller_Agenda:
         id_lab = int(input('Insira o código do laboratório a ser reservado: '))
         if not self.verifica_se_existe_lab(oracle, id_lab):
             
-            cpf = int(input('Insira o CPF de quem irá reservar o laboratório: '))
+            cpf = input('Insira o CPF de quem irá reservar o laboratório: ')
             if not self.verifica_se_existe_cliente(oracle, cpf):
                 
                 id_agenda = int(input("Insira o número da reserva: "))
@@ -27,7 +27,7 @@ class Controller_Agenda:
 
                     df_agenda = oracle.sqlToDataFrame(f"select id_cliente, id_lab, id_agenda, horaInicio, horaFim, data from agenda where id_agenda = {id_agenda}")
 
-                    novo_agenda = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horaInicio.values[0], df_agenda.horaFim.values[0], df_agenda.data.values[0])
+                    novo_agenda = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horainicio.values[0], df_agenda.horafim.values[0], df_agenda.data.values[0])
 
                     print(novo_agenda.to_string())
 
@@ -136,7 +136,7 @@ class Controller_Agenda:
         df_agenda = oracle.sqlToDataFrame(f"select id_cliente, id_lab, id_agenda, horaInicio, horaFim, data from agenda where id_agenda = {id_agenda}")
         oracle.write(f"delete from agenda where id_agenda = {id_agenda}")
         
-        agenda_excluida = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horaInicio.values[0], id_agenda.horaFim.values[0], df_agenda.data.values[0])
+        agenda_excluida = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horaInicio.values[0], df_agenda.horaFim.values[0], df_agenda.data.values[0])
 
         print("Agenda excluida co msucesso")
         print(agenda_excluida.to_string())
