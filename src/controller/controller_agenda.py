@@ -62,7 +62,7 @@ class Controller_Agenda:
                 
                 df_agenda = oracle.sqlToDataFrame(f"select id_cliente, id_lab, id_agenda, horaInicio, horaFim, data from agenda where id_agenda = {id_agenda}")
 
-                novo_agenda = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horaInicio.values[0], df_agenda.horaFim.values[0], df_agenda.data.values[0])
+                novo_agenda = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horainicio.values[0], df_agenda.horafim.values[0], df_agenda.data.values[0])
 
                 print(novo_agenda.to_string())
 
@@ -77,7 +77,7 @@ class Controller_Agenda:
                 
                 df_agenda = oracle.sqlToDataFrame(f"select id_cliente, id_lab, id_agenda, horaInicio, horaFim, data from agenda where id_agenda = {id_agenda}")
 
-                novo_agenda = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horaInicio.values[0], df_agenda.horaFim.values[0], df_agenda.data.values[0])
+                novo_agenda = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horainicio.values[0], df_agenda.horafim.values[0], df_agenda.data.values[0])
 
                 print(novo_agenda.to_string())
 
@@ -87,7 +87,7 @@ class Controller_Agenda:
                 oracle.write(f"update agenda set horarioInicio = to_date('{novo_horario_fim}', 'HH24:MI') where id_agenda = {id_agenda}")
                 df_agenda = oracle.sqlToDataFrame(f"select id_cliente, id_lab, id_agenda, horaInicio, horaFim, data from agenda where id_agenda = {id_agenda}")
 
-                novo_agenda = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horaInicio.values[0], df_agenda.horaFim.values[0], df_agenda.data.values[0])
+                novo_agenda = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horainicio.values[0], df_agenda.horafim.values[0], df_agenda.data.values[0])
 
                 print(novo_agenda.to_string())
 
@@ -97,7 +97,7 @@ class Controller_Agenda:
                 oracle.write(f"update agenda set horarioFim = to_date('{novo_horario_fim}', 'HH24:MI') where id_agenda = {id_agenda}")
                 df_agenda = oracle.sqlToDataFrame(f"select id_cliente, id_lab, id_agenda, horaInicio, horaFim, data from agenda where id_agenda = {id_agenda}")
 
-                novo_agenda = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horaInicio.values[0], df_agenda.horaFim.values[0], df_agenda.data.values[0])
+                novo_agenda = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horainicio.values[0], df_agenda.horafim.values[0], df_agenda.data.values[0])
 
                 print(novo_agenda.to_string())
 
@@ -107,7 +107,7 @@ class Controller_Agenda:
                 oracle.write(f"update agenda set data = to_date('{nova_data}', 'DD/MM/YYYY') where id_agenda = {id_agenda}")
                 df_agenda = oracle.sqlToDataFrame(f"select id_cliente, id_lab, id_agenda, horaInicio, horaFim, data from agenda where id_agenda = {id_agenda}")
 
-                novo_agenda = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horaInicio.values[0], df_agenda.horaFim.values[0], df_agenda.data.values[0])
+                novo_agenda = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horainicio.values[0], df_agenda.horafim.values[0], df_agenda.data.values[0])
 
                 print(novo_agenda.to_string())
 
@@ -136,7 +136,7 @@ class Controller_Agenda:
         df_agenda = oracle.sqlToDataFrame(f"select id_cliente, id_lab, id_agenda, horaInicio, horaFim, data from agenda where id_agenda = {id_agenda}")
         oracle.write(f"delete from agenda where id_agenda = {id_agenda}")
         
-        agenda_excluida = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horaInicio.values[0], df_agenda.horaFim.values[0], df_agenda.data.values[0])
+        agenda_excluida = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horainicio.values[0], df_agenda.horafim.values[0], df_agenda.data.values[0])
 
         print("Agenda excluida co msucesso")
         print(agenda_excluida.to_string())

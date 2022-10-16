@@ -1,10 +1,11 @@
 from utils import config
+from utils.splash_screen import SplashScreen
 from controller.controller_cliente import Controller_Cliente
 from controller.controller_laboratorio import Controller_Laboratorio
 from controller.controller_agenda import Controller_Agenda
 from reports.relatorios import Relatorio
 
-
+tela_inicial = SplashScreen()
 relatorio = Relatorio()
 ctrl_Cliente = Controller_Cliente()
 ctrl_lab = Controller_Laboratorio()
@@ -41,7 +42,7 @@ def menu_inserir():
     elif choice == 3:
         print(config.MENU_ATRIBUTOS_LABORATORIOS)
         novo_lab = ctrl_lab.inserir_laboratorio()
-    elif choice == 4:
+    elif choice == 0:
         print("")
     else:
         print('opção inválida')
@@ -61,7 +62,7 @@ def menu_remover():
     elif choice == 3:
         relatorio.get_relatorio_laboratorios()
         ctrl_lab.excluir_laboratorio()
-    elif choice == 4:
+    elif choice == 0:
         print("")
     else:
         print('opção inválida')
@@ -81,13 +82,15 @@ def menu_atualizar():
     elif choice == 3:
         print(config.MENU_ATRIBUTOS_LABORATORIOS)
         laboratorio_atualizado = ctrl_lab.atualizar_laboratorio()
-    elif choice == 4:
+    elif choice == 0:
         print("")
     else:
         print('opção inválida')
 
 def run():
+
     while True:
+        print(tela_inicial.get_updated_screen())
         print(config.MENU_PRINCIPAL)
         choice = int(input())
         config.clear_console(1)
