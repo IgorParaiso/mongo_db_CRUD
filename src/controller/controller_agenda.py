@@ -149,10 +149,10 @@ class Controller_Agenda:
 
     def verifica_se_existe_cliente(self, oracle:OracleQueries, cpf:int=None) -> bool:
 
-        df_cliente = oracle.sqlToDataFrame(f"select id_cliente, nome_cliente from clientes where id_lab = '{cpf}'")
+        df_cliente = oracle.sqlToDataFrame(f"select id_cliente, nome_cliente from clientes where id_cliente = '{cpf}'")
         return df_cliente.empty
 
     def verifica_se_existe_agenda(self, oracle:OracleQueries, id_agenda:int=None) -> bool:
 
-        df_agenda = oracle.sqlToDataFrame(f"select id_agenda, id_cliente, id_lab from agenda where id_lab = '{id_agenda}'")
+        df_agenda = oracle.sqlToDataFrame(f"select id_agenda, id_cliente, id_lab from agenda where id_agenda = '{id_agenda}'")
         return df_agenda.empty
