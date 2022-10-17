@@ -1,6 +1,8 @@
 from model.clientes import Cliente
 from conexion.oracle_queries import OracleQueries
+from reports.relatorios import Relatorio
 
+relatorio = Relatorio()
 class Controller_Cliente:
     def __init__(self):
         pass
@@ -11,6 +13,7 @@ class Controller_Cliente:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
         
+        print(relatorio.get_relatorio_clientes())
         cpf = int(input('Insira o cpf do cliente: '))
         if self.verifica_se_existe(oracle, cpf):
             nome = input('Insira o nome do cliente: ')
@@ -34,6 +37,7 @@ class Controller_Cliente:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
 
+        print(relatorio.get_relatorio_clientes())
         cpf = int(input("Insira o CPF do cliente a ser alterado: "))
 
         if not self.verifica_se_existe(oracle, cpf):
@@ -68,6 +72,7 @@ class Controller_Cliente:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
 
+        print(relatorio.get_relatorio_clientes())
         cpf = int(input("Insira o CPF do cliente a ser excluído: "))
 
         if not self.verifica_se_existe(oracle, cpf):

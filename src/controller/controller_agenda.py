@@ -51,6 +51,7 @@ class Controller_Agenda:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
         
+        relatorios.get_relatorio_laboratorios()
         id_agenda = int(input('Insira o código de reserva do laboratório: '))
         if not self.verifica_se_existe_agenda(oracle, id_agenda):
             choice = int(input("Escolha o atributo a ser  alterado\n1 - Cliente que fez a reserva\n2 - Laboratório que está reservado\n3 - Horário de início\n4 - Horário de Término\n5 - Dia da reserva\n0 - Sair "))
@@ -130,6 +131,7 @@ class Controller_Agenda:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
 
+        relatorios.get_relatorio_laboratorios()
         id_agenda = int(input('Escolha a agenda a ser excluida '))
 
         if self.verifica_se_existe_agenda(oracle, id_agenda):

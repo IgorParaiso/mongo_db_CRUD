@@ -1,6 +1,8 @@
 from model.laboratorios import Laboratorio
 from conexion.oracle_queries import OracleQueries
+from reports.relatorios import Relatorio
 
+relatorio = Relatorio()
 class Controller_Laboratorio:
     def __init__(self):
         pass
@@ -11,6 +13,7 @@ class Controller_Laboratorio:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
         
+        print(relatorio.get_relatorio_laboratorios())
         id_lab = int(input('Insira o código do laboratório: '))
         if not self.verifica_se_existe(oracle, id_lab):
             qtd_maquinas = input('Insira a quantidade de máquinas do laboratório: ')
@@ -34,6 +37,7 @@ class Controller_Laboratorio:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
 
+        print(relatorio.get_relatorio_laboratorios())
         id_lab = int(input("Insira o código do laboratorio a ser alterado: "))
 
         if not self.verifica_se_existe(oracle, id_lab):
@@ -68,6 +72,7 @@ class Controller_Laboratorio:
         oracle = OracleQueries(can_write=True)
         oracle.connect()
 
+        print(relatorio.get_relatorio_laboratorios())
         id_lab = int(input("Insira o Código do laboratório a ser excluído: "))
 
         if not self.verifica_se_existe(oracle, id_lab):
