@@ -1,12 +1,13 @@
-from datetime import date, datetime, time
+from datetime import *
+
 
 class Agenda:
     def __init__(self, 
                  cliente:int=None,
                  laboratorio:int=None,
                  id_agenda:int=None,
-                 horaInicio:time=None,
-                 horaFim:time=None,
+                 horaInicio:datetime=None,
+                 horaFim:datetime=None,
                  data:date=None
                  ):
         self.set_horaInicio(horaInicio)
@@ -16,10 +17,10 @@ class Agenda:
         self.set_laboratorio(laboratorio)
         self.set_id_agenda(id_agenda)
 
-    def set_horaInicio(self, horaInicio:date):
+    def set_horaInicio(self, horaInicio:datetime):
         self.horaInicio = horaInicio
 
-    def set_horaFim(self, horaFim:date):
+    def set_horaFim(self, horaFim:datetime):
         self.horaFim = horaFim
 
     def set_data(self, data:date):
@@ -34,10 +35,10 @@ class Agenda:
     def set_id_agenda(self, id_agenda:int):
         self.id_agenda = id_agenda
 
-    def get_horaInicio(self) -> datetime:
+    def get_horaInicio(self) -> time:
         return self.horaInicio
 
-    def get_horaFim(self) -> datetime:
+    def get_horaFim(self) -> time:
         return self.horaFim
 
     def get_data(self) -> date:

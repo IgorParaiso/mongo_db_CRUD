@@ -2,6 +2,7 @@ from model.agenda import Agenda
 from conexion.oracle_queries import OracleQueries
 from reports.relatorios import Relatorio
 
+
 relatorios = Relatorio()
 class Controller_Agenda:
     def __init__(self):
@@ -53,7 +54,7 @@ class Controller_Agenda:
         
         relatorios.get_relatorio_laboratorios()
         id_agenda = int(input('Insira o código de reserva do laboratório: '))
-        if not self.verifica_se_existe_agenda(oracle, id_agenda):
+        if self.verifica_se_existe_agenda(oracle, id_agenda):
             choice = int(input("Escolha o atributo a ser  alterado\n1 - Cliente que fez a reserva\n2 - Laboratório que está reservado\n3 - Horário de início\n4 - Horário de Término\n5 - Dia da reserva\n0 - Sair "))
 
             if choice == 1:

@@ -15,7 +15,7 @@ class Controller_Laboratorio:
         
         print(relatorio.get_relatorio_laboratorios())
         id_lab = int(input('Insira o código do laboratório: '))
-        if not self.verifica_se_existe(oracle, id_lab):
+        if self.verifica_se_existe(oracle, id_lab):
             qtd_maquinas = input('Insira a quantidade de máquinas do laboratório: ')
             lab_tipo = input('Insira o tipo de laboratório: ')
 
@@ -40,7 +40,7 @@ class Controller_Laboratorio:
         print(relatorio.get_relatorio_laboratorios())
         id_lab = int(input("Insira o código do laboratorio a ser alterado: "))
 
-        if not self.verifica_se_existe(oracle, id_lab):
+        if self.verifica_se_existe(oracle, id_lab):
             choice = int(input("Escolha uma opção\n1 - Alterar quantidade de máquinas\n2 - Alterar o tipo de laboratório\n"))
             
             if choice == 1:
@@ -75,7 +75,7 @@ class Controller_Laboratorio:
         print(relatorio.get_relatorio_laboratorios())
         id_lab = int(input("Insira o Código do laboratório a ser excluído: "))
 
-        if not self.verifica_se_existe(oracle, id_lab):
+        if self.verifica_se_existe(oracle, id_lab):
 
             if self.verifica_se_existe_agenda(oracle, id_lab):
                 
