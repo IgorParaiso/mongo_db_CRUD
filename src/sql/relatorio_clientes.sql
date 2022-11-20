@@ -1,1 +1,0 @@
-SELECT c.id_cliente as CPF, c.nome_cliente, c.telefone FROM clientes c order by c.nome_cliente
