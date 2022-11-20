@@ -34,12 +34,16 @@ def extract_and_insert():
     sql = "select * from labdatabase.{table}"
     for collection in LIST_OF_COLLECTION:
         df = oracle.sqlToDataFrame(sql.format(table=collection))
-        
-        logger.warning(f"data extracted from database Oracle labdatabase.{collection}")
-        records = json.loads(df.T.to_json()).values()
-        logger.warning("data converted to json")
-        insert_many(data=records, collection=collection)
-        logger.warning(f"documents generated at {collection} collection")
+        if df.shape[0] > 0 :
+            if collection == "agenda":
+                df["data"] = df["data"].dt.strftime("%m-%d-%Y")
+                df["horaInicio"] = df["horaInicio"].dt.strftime("%H:%M")
+                df["horaFim"] = df["horaFim"].dt.strftime("%H:%M")
+            logger.warning(f"data extracted from database Oracle labdatabase.{collection}")
+            records = json.loads(df.T.to_json()).values()
+            logger.warning("data converted to json")
+            insert_many(data=records, collection=collection)
+            logger.warning(f"documents generated at {collection} collection")
 
 if __name__ == "__main__":
     logging.warning("Starting")
