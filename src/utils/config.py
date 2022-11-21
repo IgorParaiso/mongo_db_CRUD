@@ -36,7 +36,18 @@ MENU_ATRIBUTOS_LABORATORIOS = """\tAtributos de Laboratorio
 \t- TIPO DE LABORATORIO"""
 
 # Consulta de contagem de registros por tabela
-QUERY_COUNT = 'select count(1) as total_{tabela} from {tabela}'
+def query_count(collection_name):
+    from conexion.mongo_queries import MongoQueries
+    import pandas as pd
+
+    mongo = MongoQueries()
+    mongo.connect()
+
+    my_collection = mongo.db[collection_name]
+    total_documents = my_collection.count_documents({})
+    mongo.close()
+    df = pd.DataFrame({f"total_{collection_name}":[total_documents]})
+    return df
 
 def clear_console(wait_time:int=3):
     '''
