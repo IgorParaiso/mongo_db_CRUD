@@ -48,6 +48,7 @@ def extract_and_insert():
 if __name__ == "__main__":
     logging.warning("Starting")
     createCollections(drop_if_exists=True)
+    logging.warning("Starting to import data")
     extract_and_insert()
     logging.warning("End")
 
