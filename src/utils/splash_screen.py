@@ -16,26 +16,9 @@ class SplashScreen:
         self.disciplina = "Banco de Dados"
         self.semestre = "2022/2"
 
-    def get_total_clientes(self):
-        # Cria uma nova conexão com o banco que permite alteração
-        oracle = OracleQueries()
-        oracle.connect()
-        # Retorna o total de registros computado pela query
-        return oracle.sqlToDataFrame(self.qry_total_clientes)["total_clientes"].values[0]
-
-    def get_total_laboratorios(self):
-        # Cria uma nova conexão com o banco que permite alteração
-        oracle = OracleQueries()
-        oracle.connect()
-        # Retorna o total de registros computado pela query
-        return oracle.sqlToDataFrame(self.qry_total_laboratorios)["total_laboratorios"].values[0]
-
-    def get_total_agenda(self):
-        # Cria uma nova conexão com o banco que permite alteração
-        oracle = OracleQueries()
-        oracle.connect()
-        # Retorna o total de registros computado pela query
-        return oracle.sqlToDataFrame(self.qry_total_agenda)["total_agenda"].values[0]
+    def get_count_documents(self, collection_name):
+        df = config.query_count(collection_name=collection_name)
+        return df[f"total_{collection_name}"].values[0]
 
     def get_updated_screen(self):
         return f"""
@@ -43,9 +26,9 @@ class SplashScreen:
         #         SISTEMA DE AGENDAMENTO DE LABORATÓRIOS                     
         #                                                         
         #  TOTAL DE REGISTROS:                                    
-        #      1 - CLIENTES: {str(self.get_total_clientes())}         
-        #      2 - LABORATORIOS: {str(self.get_total_laboratorios())}       
-        #      3 - AGENDAS: {str(self.get_total_agenda())}    
+        #      1 - CLIENTES: {str(self.get_count_documents(collection_name="clientes"))}         
+        #      2 - LABORATORIOS: {str(self.get_count_documents(collection_name="laboratorios"))}       
+        #      3 - AGENDAS: {str(self.get_count_documents(collection_name="agenda"))}    
         #
         #  CRIADO POR: {self.created_by}
         #
