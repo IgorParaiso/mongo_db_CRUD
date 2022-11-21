@@ -1,29 +1,25 @@
-from conexion.oracle_queries import OracleQueries
+from conexion.mongo_queries import MongoQueries
+import pandas as pd
 
 class Relatorio:
 
     def __init__(self):
-        with open ("src/sql/relatorio_clientes.sql") as f:
-            self.query_relatorio_clientes = f.read()
+        self.query_relatorio_clientes = f.read()
         
-        with open ("src/sql/relatorio_laboratorios.sql") as f:
-            self.query_relatorio_laboratorios = f.read()
+        self.query_relatorio_laboratorios = f.read()
 
-        with open ("src/sql/relatorio_agenda.sql") as f:
-            self.query_relatorio_agenda = f.read()
+        self.query_relatorio_agenda = f.read()
 
-        with open ("src/sql/relatorio_clientes_lab.sql") as f:
-            self.query_relatorio_clientes_lab = f.read()
+        self.query_relatorio_clientes_lab = f.read()
 
-        with open ("src/sql/relatorio_total_clientes.sql") as f:
-            self.query_relatorio_total_clientes = f.read()
+        self.query_relatorio_total_clientes = f.read()
     
     def get_relatorio_clientes(self):
         
-        oracle = OracleQueries()
-        oracle.connect()
+        mongo = MongoQueries()
+        mongo.connect()
 
-        print(oracle.sqlToDataFrame(self.query_relatorio_clientes))
+        print(pd.read_json(mongo.db["clientes"].find_many({})))
         
 
     def get_relatorio_laboratorios(self):
