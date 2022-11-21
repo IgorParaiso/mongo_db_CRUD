@@ -1,7 +1,7 @@
 from model.agenda import Agenda
 from conexion.mongo_queries import MongoQueries
 from reports.relatorios import Relatorio
-
+import pandas as pd
 
 relatorios = Relatorio()
 class Controller_Agenda:
@@ -27,10 +27,13 @@ class Controller_Agenda:
                     hora_inicio = input('Insira o horário de início da reserva (no formato HH:MM): ')
                     hora_fim = input('Insira o horário de encerramento da reserva (no formato HH:MM): ')
 
-                    mongo.write(f"insert into agenda values ({cpf},{id_lab},{id_agenda}, to_date('{hora_inicio}', 'HH24:MI'), to_date('{hora_fim}', 'HH24:MI'), to_date('{data}', 'DD/MM/YYYY'))")
+                    mongo.db["agenda"].insert_one({"cpf":cpf,"id_lab":id_lab,"id_agenda":id_agenda,"data":data,"hora_inicio":hora_inicio,"hora_fim":hora_fim})
 
-                    df_agenda = mongo.sqlToDataFrame(f"select id_cliente, id_lab, id_agenda, horaInicio, horaFim, data from agenda where id_agenda = {id_agenda}")
 
+                    query_result = mongo.db["agenda"].find_one({"cpf":cpf,"id_lab":id_lab,"id_agenda":id_agenda,"data":data,"hora_inicio":hora_inicio,"hora_fim":hora_fim})
+
+                    df_agenda = pd.DataFrame(query_result)
+                    
                     novo_agenda = Agenda(df_agenda.id_cliente.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horainicio.values[0], df_agenda.horafim.values[0], df_agenda.data.values[0])
 
                     print(novo_agenda.to_string())
