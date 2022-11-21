@@ -1,6 +1,7 @@
 from model.laboratorios import Laboratorio
 from conexion.mongo_queries import MongoQueries
 from reports.relatorios import Relatorio
+import pandas as pd
 
 relatorio = Relatorio()
 class Controller_Laboratorio:
@@ -18,10 +19,11 @@ class Controller_Laboratorio:
         if self.verifica_se_existe(mongo, id_lab):
             qtd_maquinas = input('Insira a quantidade de máquinas do laboratório: ')
             lab_tipo = input('Insira o tipo de laboratório: ')
+            
+            mongo.db["laboratorio"].insert_one({"id_lab":id_lab,"qtd_maquinas":qtd_maquinas,"lab_tipo":lab_tipo})
 
-            mongo.write(f"insert into laboratorios values ({id_lab},'{qtd_maquinas}', '{lab_tipo}')")
-
-            df_lab = mongo.sqlToDataFrame(f"select id_lab, qtd_maquinas, tipo_lab from laboratorios where id_lab = {id_lab}")
+            query_result = mongo.db["laboratorio"].find_one({"id_lab":id_lab,"qtd_maquinas":qtd_maquinas,"lab_tipo":lab_tipo})
+            df_lab = pd.DataFrame(query_result)
 
             novo_lab = Laboratorio(df_lab.id_lab.values[0], df_lab.qtd_maquinas.values[0], df_lab.tipo_lab.values[0])
 
