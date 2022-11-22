@@ -22,9 +22,8 @@ class Controller_Cliente:
 
             mongo.db["clientes"].insert_one({"cpf":cpf, "nome":nome, "telefone": telefone})
             query_result = mongo.db['clientes'].find({"cpf":cpf})
-            print(query_result)
             df_cliente = pd.DataFrame(list(query_result))
-            print(df_cliente)
+            
             novo_cliente = Cliente(df_cliente.cpf.values[0], df_cliente.nome.values[0], df_cliente.telefone.values[0])
 
             print(novo_cliente.to_string())
@@ -47,19 +46,19 @@ class Controller_Cliente:
             
             if choice == 1:
                 novo_nome = input("Digite o novo nome: ")
-                mongo.db['clientes'].update_one({"cpf":cpf}, {"nome":novo_nome})
+                mongo.db['clientes'].update_one({"cpf":cpf}, {"$set":{"nome":novo_nome}})
                 query_result = mongo.db["clientes"].find({"cpf":cpf})
                 df_cliente = pd.DataFrame(list(query_result))
-                cliente_atualizado = Cliente(df_cliente.cpf.values[0], df_cliente.nome_cliente.values[0], df_cliente.telefone.values[0])
+                cliente_atualizado = Cliente(df_cliente.cpf.values[0], df_cliente.nome.values[0], df_cliente.telefone.values[0])
                 print(cliente_atualizado.to_string())
                 return cliente_atualizado
             
             elif choice == 2:
                 novo_telefone = input("Digite o novo telefone: ")
-                mongo.db['clientes'].update_one({"cpf":cpf}, {"telefone":novo_telefone})
+                mongo.db['clientes'].update_one({"cpf":f"{cpf}"}, {"$set":{"telefone":novo_telefone}})
                 query_result = mongo.db["clientes"].find({"cpf":cpf})
                 df_cliente = pd.DataFrame(list(query_result))
-                cliente_atualizado = Cliente(df_cliente.cpf.values[0], df_cliente.nome_cliente.values[0], df_cliente.telefone.values[0])
+                cliente_atualizado = Cliente(df_cliente.cpf.values[0], df_cliente.nome.values[0], df_cliente.telefone.values[0])
                 print(cliente_atualizado.to_string())
                 return cliente_atualizado
             
@@ -80,15 +79,15 @@ class Controller_Cliente:
 
         if not self.verifica_se_existe(mongo, cpf):
 
-            if self.verifica_se_existe_agenda(mongo, cpf):
+            if not self.verifica_se_existe_agenda(mongo, cpf):
                 
-                confirmation = str(input("Tem certeza que quer excluir esse cleinte? (Digite S para sim e N para não) "))
+                confirmation = str(input("Tem certeza que quer excluir esse cliente? (Digite S para sim e N para não) "))
                 if confirmation.upper() == "S":
                     query_result = mongo.db["clientes"].find({"cpf":cpf})
                     df_cliente = pd.DataFrame(list(query_result))
-                    mongo.db["clientes"].delete_one({"cpf":cpf})
+                    mongo.db["clientes"].delete_one({"cpf":f"{cpf}"})
 
-                    cliente_excluido = Cliente(df_cliente.cpf.values[0], df_cliente.nome_cliente.values[0], df_cliente.telefone.values[0])
+                    cliente_excluido = Cliente(df_cliente.cpf.values[0], df_cliente.nome.values[0], df_cliente.telefone.values[0])
 
                     print("Cliente Removido com sucesso")
                     print(cliente_excluido.to_string())
@@ -101,7 +100,7 @@ class Controller_Cliente:
                 mongo.db["agenda"].delete_many({"cpf":cpf})
                 mongo.db["clientes"].delete_one({"cpf":cpf})
 
-                cliente_excluido = Cliente(df_cliente.cpf.values[0], df_cliente.nome_cliente.values[0], df_cliente.telefone.values[0])
+                cliente_excluido = Cliente(df_cliente.cpf.values[0], df_cliente.nome.values[0], df_cliente.telefone.values[0])
 
                 print("Cliente Removido com sucesso")
                 print(cliente_excluido.to_string())
@@ -117,10 +116,11 @@ class Controller_Cliente:
         df_cliente = pd.DataFrame(query_result)
         return df_cliente.empty
 
-    def verifica_se_existe_agenda(self, mongo:MongoQueries, id_agenda:int=None) -> bool:
-        query_result = mongo.db["agenda"].find({"cpf": id_agenda})
+    def verifica_se_existe_agenda(self, mongo:MongoQueries, cpf:int=None) -> bool:
+        query_result = mongo.db["agenda"].find({"cpf": cpf})
 
         df_agenda = pd.DataFrame(list(query_result))
+        print(df_agenda)
         return df_agenda.empty
     
 
