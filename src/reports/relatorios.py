@@ -1,57 +1,62 @@
-from conexion.oracle_queries import OracleQueries
+from conexion.mongo_queries import MongoQueries
+import pandas as pd
 
 class Relatorio:
 
     def __init__(self):
-        with open ("src/sql/relatorio_clientes.sql") as f:
-            self.query_relatorio_clientes = f.read()
+        self.query_relatorio_clientes = ""
         
-        with open ("src/sql/relatorio_laboratorios.sql") as f:
-            self.query_relatorio_laboratorios = f.read()
+        self.query_relatorio_laboratorios = ""
 
-        with open ("src/sql/relatorio_agenda.sql") as f:
-            self.query_relatorio_agenda = f.read()
+        self.query_relatorio_agenda = ""
 
-        with open ("src/sql/relatorio_clientes_lab.sql") as f:
-            self.query_relatorio_clientes_lab = f.read()
+        self.query_relatorio_clientes_lab = ""
 
-        with open ("src/sql/relatorio_total_clientes.sql") as f:
-            self.query_relatorio_total_clientes = f.read()
+        self.query_relatorio_total_clientes = ""
     
     def get_relatorio_clientes(self):
         
-        oracle = OracleQueries()
-        oracle.connect()
-
-        print(oracle.sqlToDataFrame(self.query_relatorio_clientes))
+        mongo = MongoQueries()
+        mongo.connect()
+        query_results = mongo.db['clientes'].find({})
+        df_cliente = pd.DataFrame(list(query_results))
+        print(df_cliente)
+        
         
 
     def get_relatorio_laboratorios(self):
 
-        oracle = OracleQueries()
-        oracle.connect()
+        mongo = MongoQueries()
+        mongo.connect()
 
-        print(oracle.sqlToDataFrame(self.query_relatorio_laboratorios))
+        query_results = mongo.db['laboratorios'].find({})
+        df_laboratorio = pd.DataFrame(list(query_results))
+        print(df_laboratorio)
     
     def get_relatorio_agenda(self):
 
-        oracle = OracleQueries()
-        oracle.connect()
+        mongo = MongoQueries()
+        mongo.connect()
 
-        print(oracle.sqlToDataFrame(self.query_relatorio_agenda))
+        query_results = mongo.db['agenda'].find({})
+        df_agenda = pd.DataFrame(list(query_results))
+
+        print(df_agenda)
 
     def get_relatorio_clientes_lab (self):
         
-        oracle = OracleQueries()
-        oracle.connect()
+        mongo = MongoQueries()
+        mongo.connect()
 
-        print(oracle.sqlToDataFrame(self.query_relatorio_clientes_lab))
+        query_results = mongo.db['cliente'].aggregate()
+
+        print(mongo.sqlToDataFrame(self.query_relatorio_clientes_lab))
         input("Pressione Enter para sair do relatório")
 
     def get_relatorio_total_clientes(self):
 
-        oracle = OracleQueries()
-        oracle.connect()
+        mongo = MongoQueries()
+        mongo.connect()
 
-        print(oracle.sqlToDataFrame(self.query_relatorio_total_clientes))
+        print(mongo.sqlToDataFrame(self.query_relatorio_total_clientes))
         input("Pressione Enter para sair do relatório")
