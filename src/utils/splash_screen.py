@@ -11,7 +11,11 @@ class SplashScreen:
         self.disciplina = "Banco de Dados"
         self.semestre = "2022/2"
 
+<<<<<<< HEAD
+    def get_count_documents(self, collection_name):
+=======
     def get_document_count(self, collection_name):
+>>>>>>> ca43c0896a4183535129af461a756e816ee571b3
         df = config.query_count(collection_name=collection_name)
         return df[f"total_{collection_name}"].values[0]
 
@@ -21,9 +25,15 @@ class SplashScreen:
         #         SISTEMA DE AGENDAMENTO DE LABORATÓRIOS                     
         #                                                         
         #  TOTAL DE REGISTROS:                                    
+<<<<<<< HEAD
+        #      1 - CLIENTES: {str(self.get_count_documents(collection_name="clientes"))}         
+        #      2 - LABORATORIOS: {str(self.get_count_documents(collection_name="laboratorios"))}       
+        #      3 - AGENDAS: {str(self.get_count_documents(collection_name="agenda"))}    
+=======
         #      1 - CLIENTES: {str(self.get_document_count(collection_name="clientes"))}         
         #      2 - LABORATORIOS: {str(self.get_document_count(collection_name="laboratorios"))}       
         #      3 - AGENDAS: {str(self.get_document_count(collection_name="agenda"))}    
+>>>>>>> ca43c0896a4183535129af461a756e816ee571b3
         #
         #  CRIADO POR: {self.created_by}
         #
