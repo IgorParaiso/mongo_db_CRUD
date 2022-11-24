@@ -115,7 +115,7 @@ class Controller_Cliente:
 
         query_result = mongo.db['clientes'].find({"cpf":cpf})
         
-        df_cliente = pd.DataFrame(query_result)
+        df_cliente = pd.DataFrame(list(query_result))
         return df_cliente.empty
 
     def verifica_se_existe_agenda(self, mongo:MongoQueries, id_agenda:int=None) -> bool:

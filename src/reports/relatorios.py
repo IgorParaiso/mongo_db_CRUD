@@ -27,17 +27,40 @@ class Relatorio:
 
         query_results = mongo.db['agenda'].find({})
         df_agenda = pd.DataFrame(list(query_results))
-
+        
         return df_agenda
 
     def get_relatorio_clientes_lab (self):
         
         mongo = MongoQueries()
         mongo.connect()
-
-        query_results = mongo.db['cliente'].aggregate()
-
-        print(mongo.sqlToDataFrame(self.query_relatorio_clientes_lab))
+        pipeline = [
+            { '$lookup': {
+            'from': 'clientes',
+            'localField': 'cpf',
+            'foreignField': 'cpf',
+            'as': 'users'
+            }},
+            {"$unwind": { "path": "$users"}},
+            {
+            '$lookup': {
+            'from': 'laboratorios',
+            'localField': 'id_lab',
+            'foreignField': 'id_lab',
+            'as': 'laboratorios'
+            }
+            },
+            { "$unwind": {"path": "$laboratorios"}},
+            { "$project": {
+            "Nome_Cliente": "$users.nome",
+            "data":1,
+            "Tipo_Laboratorio": "$laboratorios.lab_tipo",
+            "_id":0
+            }}
+        ]
+        query_results = mongo.db['agenda'].aggregate(pipeline)
+        df_relatorio = pd.DataFrame(list(query_results))
+        print(df_relatorio)
         input("Pressione Enter para sair do relatório")
 
     def get_relatorio_total_clientes(self):
@@ -45,5 +68,44 @@ class Relatorio:
         mongo = MongoQueries()
         mongo.connect()
 
-        print(mongo.sqlToDataFrame(self.query_relatorio_total_clientes))
+        pipeline = [
+            {
+            '$group': {
+                '_id': '$cpf',
+                'qtd_reservas': {
+                    '$sum':1
+                }
+            }
+            },
+            {
+            '$project': {
+                'cpf': '$_id',
+                'qtd_reservas':1,
+                '_id':0
+            }
+            },
+            {
+            '$lookup': {
+                'from': 'agenda',
+                'localField': 'cpf',
+                'foreignField': 'cpf',
+                'as': 'agenda'
+            }
+            },
+            {
+            '$unwind': {
+                'path':'$agenda'
+            }
+            },
+            {
+            '$project': {
+            'cpf':1,
+            'qtd_pedidos':1,
+            '_id':0
+            }
+            }
+        ]
+        query_results = mongo.db['clientes'].aggregate(pipeline)
+        df_relatorio = pd.DataFrame(list(query_results))
+        print(df_relatorio)
         input("Pressione Enter para sair do relatório")
