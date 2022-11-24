@@ -18,7 +18,7 @@ class Relatorio:
 
         query_results = mongo.db['laboratorios'].find({})
         df_laboratorio = pd.DataFrame(list(query_results))
-        print(df_laboratorio)
+        return df_laboratorio
     
     def get_relatorio_agenda(self):
 
@@ -28,7 +28,7 @@ class Relatorio:
         query_results = mongo.db['agenda'].find({})
         df_agenda = pd.DataFrame(list(query_results))
 
-        print(df_agenda)
+        return df_agenda
 
     def get_relatorio_clientes_lab (self):
         

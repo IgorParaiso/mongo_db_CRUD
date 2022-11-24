@@ -17,15 +17,15 @@ def menu_relatorio():
     config.clear_console(1)
 
     if choice == 1:
-        relatorio.get_relatorio_clientes()
+        print(relatorio.get_relatorio_clientes())
     elif choice == 2:
-        relatorio.get_relatorio_agenda()
+        print(relatorio.get_relatorio_agenda())
     elif choice == 3:
-        relatorio.get_relatorio_laboratorios()
+        print(relatorio.get_relatorio_laboratorios())
     elif choice == 4:
-        relatorio.get_relatorio_clientes_lab()
+        print(relatorio.get_relatorio_clientes_lab())
     elif choice == 5:
-        relatorio.get_relatorio_total_clientes()
+        print(relatorio.get_relatorio_total_clientes())
     elif choice == 0:
         print("")
     else:
