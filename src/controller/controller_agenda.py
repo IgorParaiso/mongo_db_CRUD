@@ -19,7 +19,7 @@ class Controller_Agenda:
         if not self.verifica_se_existe_lab(mongo, id_lab):
             print(relatorios.get_relatorio_clientes())
             cpf = input('Insira o CPF de quem irá reservar o laboratório: ')
-            if self.verifica_se_existe_cliente(mongo, cpf):
+            if not self.verifica_se_existe_cliente(mongo, cpf):
                 
                 id_agenda = int(input("Insira o número da reserva: "))
                 if self.verifica_se_existe_agenda(mongo, id_agenda):
@@ -29,11 +29,9 @@ class Controller_Agenda:
 
                     mongo.db["agenda"].insert_one({"cpf":cpf,"id_lab":id_lab,"id_agenda":id_agenda,"data":data,"horainicio":hora_inicio,"horafim":hora_fim})
 
-                    query_result = mongo.db["agenda"].find_one({"cpf":cpf,"id_lab":id_lab,"id_agenda":id_agenda,"data": data,"horainicio":hora_inicio,"horafim":hora_fim})
+                    query_result = mongo.db["agenda"].find_one({"cpf":cpf,"id_lab":id_lab,"id_agenda":id_agenda,"data":data,"horainicio":hora_inicio,"horafim":hora_fim})
 
-                    df_agenda = pd.DataFrame(query_result)
-                    
-                    novo_agenda = Agenda(df_agenda.cpf.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horainicio.values[0], df_agenda.horafim.values[0], df_agenda.data.values[0])
+                    novo_agenda = Agenda( query_result['cpf'], query_result['id_lab'], query_result["id_agenda"], query_result["data"], query_result["horainicio"], query_result["horafim"])
 
                     print(novo_agenda.to_string())
 
@@ -115,6 +113,7 @@ class Controller_Agenda:
                 query_result = mongo.db['agenda'].find({'id_agenda':id_agenda})
                 
                 df_agenda = pd.DataFrame(list(query_result))
+                
                 novo_agenda = Agenda(df_agenda.cpf.values[0], df_agenda.id_lab.values[0], df_agenda.id_agenda.values[0], df_agenda.horainicio.values[0], df_agenda.horafim.values[0], df_agenda.data.values[0])
 
                 print(novo_agenda.to_string())
@@ -176,7 +175,7 @@ class Controller_Agenda:
         df_lab = pd.DataFrame(list(query_result))
         return df_lab.empty
 
-    def verifica_se_existe_cliente(self, mongo:MongoQueries, cpf:int=None) -> bool:
+    def verifica_se_existe_cliente(self, mongo:MongoQueries, cpf:str=None) -> bool:
         query_result = mongo.db['clientes'].find({"cpf":cpf})
         
         df_cliente = pd.DataFrame(list(query_result))

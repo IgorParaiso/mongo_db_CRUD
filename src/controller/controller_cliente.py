@@ -15,7 +15,7 @@ class Controller_Cliente:
         mongo.connect()
         
         print(relatorio.get_relatorio_clientes())
-        cpf = int(input('Insira o cpf do cliente: '))
+        cpf = input('Insira o cpf do cliente: ')
         if self.verifica_se_existe(mongo, cpf):
             nome = input('Insira o nome do cliente: ')
             telefone = input('Insira o telefone do cliente: ')
@@ -39,7 +39,7 @@ class Controller_Cliente:
         mongo.connect()
 
         print(relatorio.get_relatorio_clientes())
-        cpf = int(input("Insira o CPF do cliente a ser alterado: "))
+        cpf = input("Insira o CPF do cliente a ser alterado: ")
 
         if not self.verifica_se_existe(mongo, cpf):
             choice = int(input("Escolha uma opção\n1 - Alterar nome\n2 - Alterar telefone\n"))

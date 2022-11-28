@@ -1,13 +1,13 @@
 class Cliente:
     def __init__(self,
-                 cpf:int=None,
+                 cpf:str=None,
                  nome_cliente:str=None,
                  telefone:str=None):
         self.set_cpf(cpf)
         self.set_nome_cliente(nome_cliente)
         self.set_telefone(telefone)
 
-    def set_cpf(self, cpf:int):
+    def set_cpf(self, cpf:str):
         self.cpf = cpf
 
     def set_nome_cliente(self, nome_cliente:str):
