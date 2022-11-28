@@ -75,37 +75,27 @@ class Relatorio:
                 'qtd_reservas': {
                     '$sum':1
                 }
-            }
-            },
-            {
-            '$project': {
-                'cpf': '$_id',
-                'qtd_reservas':1,
-                '_id':0
-            }
-            },
-            {
-            '$lookup': {
-                'from': 'agenda',
-                'localField': 'cpf',
-                'foreignField': 'cpf',
-                'as': 'agenda'
-            }
-            },
+            }},
+            { '$lookup': {
+            'from':"clientes",
+            'localField': '_id',
+            'foreignField':'cpf',
+            'as':'users'
+            }},
             {
             '$unwind': {
-                'path':'$agenda'
+            'path':'$users'
             }
-            },
-            {
-            '$project': {
-            'cpf':1,
-            'qtd_pedidos':1,
-            '_id':0
-            }
-            }
+            },            
+            { '$project': {
+            "_id":1,
+            "cpf":1,
+            "nome":"$users.nome",
+            "qtd_reservas":1
+            }}
+
         ]
-        query_results = mongo.db['clientes'].aggregate(pipeline)
+        query_results = mongo.db['agenda'].aggregate(pipeline)
         df_relatorio = pd.DataFrame(list(query_results))
         print(df_relatorio)
         input("Pressione Enter para sair do relatório")

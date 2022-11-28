@@ -77,7 +77,7 @@ class Controller_Cliente:
         print(relatorio.get_relatorio_clientes())
         cpf = int(input("Insira o CPF do cliente a ser excluído: "))
 
-        if not self.verifica_se_existe(mongo, cpf):
+        if self.verifica_se_existe(mongo, cpf):
 
             if not self.verifica_se_existe_agenda(mongo, cpf):
                 
@@ -101,7 +101,7 @@ class Controller_Cliente:
                     mongo.db["agenda"].delete_many({"cpf":cpf})
                     mongo.db["clientes"].delete_one({"cpf":cpf})
 
-                    cliente_excluido = Cliente(df_cliente.cpf.values[0], df_cliente.nome.values[0], df_cliente.telefone.values[0])
+                    cliente_excluido = Cliente(query_result['cpf'], query_result['nome'], query_result['telefone'])
 
                     print("Cliente Removido com sucesso")
                     print(cliente_excluido.to_string())
@@ -110,14 +110,14 @@ class Controller_Cliente:
             print(f"cliente {cpf} não existe")
             return None
 
-    def verifica_se_existe(self, mongo:MongoQueries, cpf:int=None) -> bool:
+    def verifica_se_existe(self, mongo:MongoQueries, cpf:str=None) -> bool:
 
         query_result = mongo.db['clientes'].find({"cpf":cpf})
         
         df_cliente = pd.DataFrame(list(query_result))
         return df_cliente.empty
 
-    def verifica_se_existe_agenda(self, mongo:MongoQueries, cpf:int=None) -> bool:
+    def verifica_se_existe_agenda(self, mongo:MongoQueries, cpf:str=None) -> bool:
         query_result = mongo.db["agenda"].find({"cpf": cpf})
 
         df_agenda = pd.DataFrame(list(query_result))
