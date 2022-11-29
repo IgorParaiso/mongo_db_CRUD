@@ -84,16 +84,16 @@ class Controller_Laboratorio:
 
             if self.verifica_se_existe_agenda(mongo, id_lab):
                 
-                confirmation = str(input("Tem certeza que quer excluir esse cliente? (Digite S para sim e N para não) "))
+                confirmation = str(input("Tem certeza que quer excluir esse laboratório? (Digite S para sim e N para não) "))
                 if confirmation.upper() == "S":
                     query_result = mongo.db['laboratorios'].find({'id_lab':id_lab})
                     df_cliente = pd.DataFrame(list(query_result))
                     mongo.db['laboratorios'].delete_one({'id_lab':id_lab})
 
-                    cliente_excluido = Laboratorio(df_cliente.id_lab.values[0], df_cliente.qtd_maquinas.values[0], df_cliente.lab_tipo.values[0])
+                    laboratorio_excluido = Laboratorio(df_cliente.id_lab.values[0], df_cliente.qtd_maquinas.values[0], df_cliente.lab_tipo.values[0])
 
-                    print("Cliente Removido com sucesso")
-                    print(cliente_excluido.to_string())
+                    print("Laboratório Removido com sucesso")
+                    print(laboratorio_excluido.to_string())
             else:
                 confirmation = str(input("O usuário tem registro na tabela agenda, digite S para excluir os registros da tabela agenda e N para voltar ao menu principal: "))
                 if confirmation.upper() == "S":
